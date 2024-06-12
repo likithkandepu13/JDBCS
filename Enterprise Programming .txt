@@ -1,0 +1,408 @@
+		Enterprise Programming 
+	---------------------------------------------
+
+
+Pre-Req: HTML, CSS, JS, XML and BOOTSTRAP
+Outcome:	i) To build web applications
+		    ii) RED HAT- Certificate.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+C0-1:
+--------
+	~ JAVA DATABASE CONNECTIVITY.(JDBC)
+		- Introduction.
+		- Why JDBC?
+		- JDBC Drivers.
+		- JDBC Steps
+		- JDBC Classes.
+		- JDBC Interfaces.
+   		- JDBC Examples.
+		- JDBC Crud operations
+
+
+
+Introduction:
+--------------
+	- JDBC : Java Data BAse Connectivity
+	- JDBC is a JAVA API which allows java app to interact iwth the Database.
+
+	NOTE: Java API: Java API Consists of many packages where every packages consists of many classes and interfaces.Which helps Java Application to interact with Databases
+ 		Package-> java.sql.*
+		
+
+Why JDBC:
+----------
+	- JDBC is a fundamental tool for all JAVA developers to interact with the database.
+	- It is popular and most widely used because it is Platform inependent.
+	- Versatility.
+	
+	JAVA APP ------------ DATABASE
+		 (ODBC Drivers)
+	JAVA APP ------------- DATABASE
+		(JDBC Drivers)
+
+	Note: Use-Cases:
+		1. WEB APPLICATIONS.
+		2. Enterprise Application
+		3. Desktop Application.
+
+JDBC DRIVERS:
+--------------
+	- Helps to communicate with the java application
+	- There are about 4 Drivers:
+		i)  Type-1 Driver
+		ii) Type-2 Driver
+		iii) Type-3 Driver
+		iv) Type-4 Driver (We use in this )
+
+	~ Type-1:
+	---------
+		-It is also known as ODBC-JDBC drivers.
+		-It is useful to connect databases where only ODBC drivers are available 
+	~ Type-2:
+	---------
+		- It is also know as the Native API Driver.
+		- Suitable for applications where performance is critical.
+	~ Type-3:
+		- It is also known as network protocol drivers.
+		- Suitable for network enivironment where the client does not knows the requirement of the database
+	
+
+	~ Type-4 drivers :-
+		- it is also known as thin drivers.
+		- it is commonly used for all the applications due to the following reasons :-1) effiency 2) performance 3) ease of use  4) platform independent
+
+
+JDBC STEPS :
+----------------
+	-THERE ARE 7 steps to connect my JAVA APPLICATION TO A DATABASE USING JDBC DRIVERS
+			1) IMPORT PACKAGE
+			2) LOAD DRIVERS (MAINLY: THIN DRIVERS)
+			3) CONNECTION
+			4)Statements
+			5) create RESULTSET OBJECT
+			6) EXECUTE
+			7) CLOSE CONNECTION
+
+	EXAMPLE:
+	step1:
+		import java.sql.*
+		import java.sql.exception
+
+	step2:
+	loading drivers (2 types)
+		1) driver Object -----------
+		2)forName() method
+
+	syntax:-
+ 			1) Driver drv = new driverclass-path
+ 			DriverManager.registerDriver(drv)
+
+			2) Class.forName("driverclass-path")
+
+	step3:-
+	connection establishment
+	 		connection con  =  DriverManager.getConnection("database-path","username","pwd")
+
+	step-4:
+	 	Create Statement
+		Statemenr stmt = con.createStatement()
+
+	step-5: Create ResultSet Object
+		ResultSet rs = stmt.executeQuery("Only select")
+
+	step-6: Execute Queries
+		stmt.executeUpdate("queries other than select")
+
+	
+	step-7: Close the execution
+		con.close()
+
+Note: Connecting with the Databases
+	1.Oracle: 
+			driverclass: oracle.jdbc.driver.OracleDriver()
+			Connection jdbc:oracle:thin:@localhost:1524:xe
+			username: system
+			password: ---------
+	2. MyQL:
+	driveclass: com.mysql.jdbc.Driver
+	Connection: jdbc:mysql://localhost:3306/db 
+	username: root
+	password: ----------
+
+
+Example :
+--------- DB Connectivity (Driver Object) (oracle)
+
+		import java.sql.*;
+
+		class DBConnectivity
+		{
+			public static void main(Streing args[])
+			{
+				Driver drv = new oracle.jdbc.driver.OracleDriver();
+				DriverManager.registerDriver(drv);
+
+				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","password");
+
+				if(con!=null)
+				{
+					System.out.println("Connection is Successful");
+				}
+				else
+				{
+					System.out.println("Connection is not successful");
+				}
+				Statement stmt = con.createStatement();
+				con.close()
+			}
+		}
+	---- DB Connectivity (oracle) using forName method:
+	import java.sql.*;
+
+		class DBConnectivity
+		{
+			public static void main(Streing args[])
+			{
+				class.forName("com.mysql.jdbc.Driver")
+				Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","password");
+
+				if(con!=null)
+				{
+					System.out.println("Connection is Successful");
+				}
+				else
+				{
+					System.out.println("Connection is not successful");
+				}
+				Statement stmt = con.createStatement();
+				con.close()
+			}
+		}
+
+-----DB Connectiviy using SQL:
+	import java.sql.*;
+
+		class DBConnectivity
+		{
+			public static void main(Streing args[])
+			{
+				Driver drv = new com.mysql.jdbc.Driver
+				DriverManager.registerDriver(drv);
+
+				Connection con = DriverManager.getConnection(" jdbc:mysql://localhost:3306/db ","root","password");
+
+				if(con!=null)
+				{
+					System.out.println("Connection is Successful");
+				}
+				else
+				{
+					System.out.println("Connection is not successful");
+				}
+				Statement stmt = con.createStatement();
+				con.close()
+			}
+		}
+
+
+
+JDBC Classes:
+-----------------
+	1.Driver DriverManager
+	2. Blob
+	3. Clob
+
+	--------------------------
+	 	i) Driver Manager:
+				- It acts as an interface between an user and a database.
+						Methods:
+						-------
+						a. registerDriver()
+						b. deregisterDriver()
+						c. getConnection()
+
+							a.registerDriver():
+							----------------------
+								- It is used to load the Drivers.
+								Ex:
+								  Driver drv = new classDriver-path;
+								  DriverManager.registerDriver(drv);
+							b. deregisterDriver():
+							-----------------------------
+								- To remove the drivers which are recently loaded.
+								Ex:
+								DriverManager.deregisterDriver();
+							c. getConnection():
+							------------------------
+								- It is used to establish  a connection with the database.
+								ex: DriverManager.getConnection("dbpath","username","password");
+
+-----------
+Example-5: To demonstrate the DriverManager class:
+----------(example of 1 to 4 same)
+
+
+			ii) Blob:
+					- It is used to store and retrive an image from a database
+					- For store:
+						classname: FileInputStream
+						method: setBinaryStream()
+					- For Retrive:
+						classname : FileOutputStream
+						method: getBytes()
+------------
+Example-6: To store an image in the database
+------------
+Example- 7: To retrive an image from the database
+------------
+			iii) Clob:
+					-------	
+					- it is used to store and retrive a file from the database.
+					- For store:
+						classname: FileReader
+						method: setCharacterStream()
+					- For Retrive:
+						classname : FileWriter
+						method: getCharacterStream()
+------------
+Example-8: To store a file in the database
+----------
+Example-9: To retrive a file from the database
+----------
+
+----------------
+JDBC Interfaces:
+------------------
+	1.Driver
+	2. Connection
+	3. Statement
+	4. PreparedStatement
+	5. ResultSet
+	6. ResultSetMetaData
+	7. databaseMetaData
+	8. Callable
+
+		i) Driver:
+		----------
+			- It helps us to define the drivers that we want to load.
+
+			Ex: Driver drv = new classdriver-path;
+
+		ii) Connection:
+			- The point of the time which acts as a session between the database and java Application
+			-Methods:
+			----------
+					a. createStatement()
+					b. setAutoCommit()
+					c. commit()
+					d. rollback()
+					e. close()
+	Ex: a. Statement stmt = con.createStatement()
+		b. stmt.setAutoCommit()
+		c. stmt.commit()
+		d. stmt.rollback()
+		e. con.close()
+
+		iii) Statement:
+			-This interface consists of methods
+			Methods:
+			----------
+				a. executeQuery()
+					- Only for select the Query.
+				b. executeUpdate()
+					- All other queries can be executed by this method.
+					
+					Ex: a. ResultSet rs = stmt.executeQuery("select query");
+						b. ResultSet rs = stmt.executeUpdate("Any Query");
+						 or smt.execute();
+
+				c.PreparedStatement():
+					- It is a sub interface of statement interface	
+					Methods:
+					--------
+					a. setInt()
+					b. setString()
+					c. setFloat()
+					d. setDouble()
+					e. executeQuery()
+					d. executeUpdate()
+
+	Ex: PreparedStatement ps = con.PreparedStatement("query(?,?,?,?)")
+		ps.setInt(1,12345)
+		ps.setString(2,"ABC")
+		ps.setFloat(3,9.5)
+		ps.setDouble(4,200000)
+		ps.execute()
+
+		iv) ResultSet():
+		------
+			- it is an interface to retrieve data from the database
+			- it represents a set of rows, returned by a database query, maintained by the cursor pointing to the current row.
+			Methods:
+			-------
+				a. next()
+				b. previous()
+				c. first()
+				d. last()
+				e. getInt()
+				f. getFloat()
+				Ex: ResultSet rs = smt.executeQuery("SELECT ID FROM STUDENT");
+
+				a.rs.next()
+				b.rs.previous()
+				c.rs.last()
+				d. rs.last()
+				e. rs.getInt(1)
+				f. rs.getFloat(3)
+				g. rs.getDouble(4)
+			
+			iv) ResultSetMetaData():
+			-------------------
+				- It refers to data within the data.
+				- we can get further info from the existing data.
+				Methods:
+				--------
+					a. getColumnCount()
+					b. getColumnName()
+					c. getColumnTypeName()
+					d. getTableName()
+
+				Ex:	 ResultSetMetaData rsmd = stmt.getMetaData()
+					rsmd.getColumnCount()
+					rsmd.getColumnName()
+					rsmd.getColumnTypeName()
+					rsmd.getTableName()
+
+			Vii) databaseMetaData():
+			---------------------------------
+				- It provides more info about database
+				-Methods:
+				---------
+					a.getDriverName()
+					b.getDriverVersion()
+					c.getDatabaseProductName()
+					e. getDatabaseProductVersion()
+
+				Ex: databaseMetaData dbmd = con.getMetaData()
+					dbmd .getDriverName()
+					bdbmd .getDriverVersion()
+					dbmd .getDatabaseProductName()
+					dbmd . getDatabaseProductVersion()
+
+			viii) Callable():
+			--------------
+				-This interface is used to call the functions or called procedures or Stored procedures
+				Methods:
+				------
+					a. prepareCall()
+
+--------------------------------------------------------------
+JDBC Examples:
+---------------
+
+
+				
+
